@@ -2,7 +2,8 @@
   "name": "ez-semicolon",
   "displayName": "EZ Semicolon",
   "description": "Makes semicolons easy.",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "publisher": "RileyBruins",
   "engines": {
     "vscode": "^1.69.0"
   },
