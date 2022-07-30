@@ -40,7 +40,11 @@ function semicolonAtEnd() {
 
 	const newline = vscode.workspace.getConfiguration('ez-semicolon').get('newline');
 
-	if (lineObject.text.indexOf('for') !== -1) { return; }
+	// if (lineObject.text.indexOf('for') !== -1) { return; }
+	if (lineObject.text.indexOf('for ') === lineObject.firstNonWhitespaceCharacterIndex
+	|| lineObject.text.indexOf('for(') === lineObject.firstNonWhitespaceCharacterIndex) {
+		return;
+	}
 
 	// two adjacent semicolons at end of line
 	if ((lineObject.text.charAt(cursorPos - 1) === ';' && cursorPos === lineLength - 1) || (lineObject.text.charAt(cursorPos + 1) === ';' && cursorPos === lineLength - 2)) {
