@@ -13,5 +13,5 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 - Initial release
 
-[1.1.0]: https://github.com/ribru17/ez-semicolon/compare/1.0.0..1.1.0
-[1.0.0]: https://github.com/ribru17/ez-semicolon/compare/1.0.0..HEAD
+[1.1.0]: https://github.com/ribru17/ez-semicolon/compare/v1.0.0..v1.1.0
+[1.0.0]: https://github.com/ribru17/ez-semicolon/compare/v1.0.0..HEAD
