@@ -7,10 +7,11 @@
     "vscode": "^1.69.0"
   },
   "categories": [
-    "Other"
+    "Other",
+    "Formatters"
   ],
   "activationEvents": [
-    "*"
+    "onStartupFinished"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -55,5 +56,14 @@
     "type": "git",
     "url": "https://github.com/ribru17/ez-semicolon"
   },
-  "homepage": "https://github.com/ribru17/ez-semicolon"
+  "homepage": "https://github.com/ribru17/ez-semicolon",
+  "keywords": [
+    "semicolon",
+    "smart",
+    "quick"
+  ],
+  "bugs": {
+    "url": "https://github.com/ribru17/ez-semicolon/issues"
+  },
+  "icon": "images/ezsemicolon.png"
 }

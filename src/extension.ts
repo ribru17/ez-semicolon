@@ -14,7 +14,11 @@ export function activate(context: vscode.ExtensionContext) {
 	vscode.workspace.onDidChangeTextDocument(e => {
 		if (e.contentChanges[e.contentChanges.length - 1].text === ';' || e.contentChanges[0].text === ';') {
 			if (editor && editor.selection.isEmpty) {
-				if (isInString()) { return ;}
+				let escapeString = vscode.workspace.getConfiguration('ez-semicolon').get('escapeString');
+				if (!escapeString && isInString()) {
+					// console.log('returned');
+					return ;
+				}
 				semicolonAtEnd();
 			}
 		}
