@@ -21,6 +21,11 @@
           "type": "boolean",
           "default": "true",
           "description": "Follow each semicolon with a new line"
+        },
+        "ez-semicolon.escapeString": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Reformat the semicolon even if the cursor is inside a string literal"
         }
       }
     }
@@ -49,5 +54,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/ribru17/ez-semicolon"
-  }
+  },
+  "homepage": "https://github.com/ribru17/ez-semicolon"
 }

@@ -1,43 +1,17 @@
-# ez-semicolon README
+# EZ Semicolon
 
-An extension that makes semicolons easy!
-
-## Features
+## An extension that makes semicolons easy!
 
 ![preview](images/preview.gif)
 
+## Features
+
+* No matter where your cursor is, when you enter a semicolon it will always appear at the end of the line and (optionally) followed by a new line!
+* Unlike many other extensions, EZ Semicolon has support for:
+  * Multiple cursors
+  * Detecting whether the user is in a `for` loop or a single line string literal
+
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+* `ez-semicolon.newline`: Whether or not to follow semicolons with a newline each time. Defaults to `true`.
+* `ez-semicolon.escapeString`: Whether or not to reformat the semicolon even if the cursor is inside a string literal. Defaults to `false`.
