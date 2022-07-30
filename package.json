@@ -14,7 +14,16 @@
   ],
   "main": "./out/extension.js",
   "contributes": {
-    
+    "configuration": {
+      "title": "EZ Semicolon",
+      "properties": {
+        "ez-semicolon.newline": {
+          "type": "boolean",
+          "default": "true",
+          "description": "Follow each semicolon with a new line"
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
@@ -36,5 +45,9 @@
     "mocha": "^10.0.0",
     "typescript": "^4.7.4",
     "@vscode/test-electron": "^2.1.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ribru17/ez-semicolon"
   }
 }

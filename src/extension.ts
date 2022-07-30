@@ -8,15 +8,24 @@ export function activate(context: vscode.ExtensionContext) {
 	
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "smart-semicolons" is now active!');
+	console.log('Congratulations, your extension "ez-semicolon" is now active!');
 
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
-	// let disposable = vscode.commands.registerCommand('smart-semicolons.helloWorld', () => {
+	// let disposable = vscode.commands.registerCommand('ez-semicolon.placeSemicolon', () => {
 	// 	// The code you place here will be executed every time your command is executed
 	// 	// Display a message box to the user
-	// 	vscode.window.showInformationMessage('Hello World from smart-semicolons!');
+	// 	const isAuto = vscode.workspace.getConfiguration('ez-semicolon').get('auto');
+	// 	vscode.commands.executeCommand("type", { text: ';' }).then(success => {
+	// 		if (!isAuto) {
+	// 			if (semicolonAtEnd()) {
+	// 				semicolonAtEnd();
+	// 			}
+	// 		}
+	// 	}).then(undefined, err => {
+	// 		console.error(err);
+	// 	});
 	// });
 
 	// context.subscriptions.push(disposable);
@@ -28,6 +37,7 @@ export function activate(context: vscode.ExtensionContext) {
 	vscode.workspace.onDidChangeTextDocument(e => {
 		if (e.contentChanges[e.contentChanges.length - 1].text === ';' || e.contentChanges[0].text === ';') {
 			if (editor && editor.selection.isEmpty) {
+				if (isInString()) { return ;}
 				semicolonAtEnd();
 			}
 		}
@@ -47,16 +57,20 @@ function semicolonAtEnd() {
 	let lineLength = lineObject.text.length;
 	let cursorPos = editor.selection.active.character;
 
+	const newline = vscode.workspace.getConfiguration('ez-semicolon').get('newline');
+
 	if (lineObject.text.indexOf('for') !== -1) { return; }
 
 	// two adjacent semicolons at end of line
 	if ((lineObject.text.charAt(cursorPos - 1) === ';' && cursorPos === lineLength - 1) || (lineObject.text.charAt(cursorPos + 1) === ';' && cursorPos === lineLength - 2)) {
 		vscode.commands.executeCommand('deleteLeft').then(() => {
-			vscode.commands.executeCommand('editor.action.insertLineAfter').then(() => {
-				// console.log('valid line after');
-			}).then(undefined, err => {
-				console.error(err);
-			});
+			if (newline) {
+				vscode.commands.executeCommand('editor.action.insertLineAfter').then(() => {
+					// console.log('valid line after');
+				}).then(undefined, err => {
+					console.error(err);
+				});
+			}
 		}).then(undefined, err => {
 			console.error(err);
 		});
@@ -88,12 +102,39 @@ function semicolonAtEnd() {
 			});
 			// return;
 		}
-		vscode.commands.executeCommand('editor.action.insertLineAfter').then(success => {
-			// console.log('valid line after');
-		}, err => {
-			console.error(err);
-		});
+		if (newline) {
+			vscode.commands.executeCommand('editor.action.insertLineAfter').then(success => {
+				// console.log('valid line after');
+			}, err => {
+				console.error(err);
+			});
+		}
 	}
+}
+
+function isInString(): boolean {
+	let editor = vscode.window.activeTextEditor;
+
+	if (!editor) {
+		console.error('no editor');
+		return false;
+	}
+
+	let lineIndex = editor.selection.active.line;
+	let lineObject = editor.document.lineAt(lineIndex);
+	let lineLength = lineObject.text.length;
+	let cursorPos = editor.selection.active.character;
+
+	let leftCountS = (lineObject.text.slice(0, cursorPos).match(/'/g) || []).length;
+	let rightCountS = (lineObject.text.slice(cursorPos).match(/'/g) || []).length;
+	
+	let leftCountD = (lineObject.text.slice(0, cursorPos).match(/"/g) || []).length;
+	let rightCountD = (lineObject.text.slice(cursorPos).match(/"/g) || []).length;
+
+	if ((leftCountD % 2 === 1 && rightCountD % 2 === 1) || (leftCountS % 2 === 1 && rightCountS % 2 === 1)) {
+		return true;
+	}
+	return false;
 }
 
 // this method is called when your extension is deactivated
