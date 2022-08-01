@@ -10,6 +10,9 @@
 * Unlike many other extensions, EZ Semicolon has support for:
   * Multiple cursors
   * Detecting whether the user is in a `for` loop or a single line string literal
+* Other features:
+  * If the line already contains a semicolon at the end, a new line will be inserted at the end without adding another semicolon
+  * Add a semicolon regularly (without formatting) by pressing `ctrl+alt+;` (`cmd+alt+;` on Mac)
 
 ## Extension Settings
 

@@ -2,7 +2,7 @@
   "name": "ez-semicolon",
   "displayName": "EZ Semicolon",
   "description": "Makes semicolons easy.",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "publisher": "RileyBruins",
   "engines": {
     "vscode": "^1.69.0"
@@ -30,7 +30,31 @@
           "description": "Reformat the semicolon even if the cursor is inside a string literal"
         }
       }
-    }
+    },
+    "commands": [
+      {
+        "command": "ez-semicolon.semicolonFormatted",
+        "title": "Places a semicolon at the end of the line and (optionally) followed by a new line."
+      },
+      {
+        "command": "ez-semicolon.semicolonDefault",
+        "title": "Places a semicolon where the cursor is with no formatting."
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "ez-semicolon.semicolonFormatted",
+        "key": ";",
+        "mac": ";",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "ez-semicolon.semicolonDefault",
+        "key": "ctrl+alt+;",
+        "mac": "cmd+alt+;",
+        "when": "editorTextFocus"
+      }
+    ]
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
