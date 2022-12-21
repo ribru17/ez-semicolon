@@ -39,6 +39,10 @@
       {
         "command": "ez-semicolon.semicolonDefault",
         "title": "Places a semicolon where the cursor is with no formatting."
+      },
+      {
+        "command": "ez-semicolon.semicolonNoNewline",
+        "title": "Places a semicolon at the end of the line with no new line after."
       }
     ],
     "keybindings": [
@@ -52,6 +56,12 @@
         "command": "ez-semicolon.semicolonDefault",
         "key": "ctrl+alt+;",
         "mac": "cmd+alt+;",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "ez-semicolon.semicolonNoNewline",
+        "key": "ctrl+;",
+        "mac": "cmd+;",
         "when": "editorTextFocus"
       }
     ]

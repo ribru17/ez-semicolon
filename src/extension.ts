@@ -7,19 +7,22 @@ import * as vscode from 'vscode';
 export function activate(context: vscode.ExtensionContext) {
 	const formattedDisp = vscode.commands.registerCommand('ez-semicolon.semicolonFormatted', () => {
 		semicolonAtEnd();
-
 	});
+
+	const noNewlineDisp = vscode.commands.registerCommand('ez-semicolon.semicolonNoNewline', () => {
+		semicolonAtEnd(true)
+	})
 
 	const defaultDisp = vscode.commands.registerCommand('ez-semicolon.semicolonDefault', () => {
 		semicolonDefault();
-
 	});
 
 	context.subscriptions.push(formattedDisp);
+	context.subscriptions.push(noNewlineDisp);
 	context.subscriptions.push(defaultDisp);
 }
 
-function semicolonAtEnd() {
+function semicolonAtEnd(noNewlineCmd?: boolean) {
 	
 	let editor = vscode.window.activeTextEditor;
 
@@ -29,8 +32,9 @@ function semicolonAtEnd() {
 	}
 
 	// if cursor is in a string and it should not be formatted
+	// i.e. escapeString setting is false and user is not coming from ctrl+; command
 	let escapeString = vscode.workspace.getConfiguration('ez-semicolon').get('escapeString');
-	if (!escapeString && isInString()) {
+	if (!escapeString && !noNewlineCmd && isInString()) {
 		vscode.commands.executeCommand("type", { text: ';' }).then(success => {
 			// console.log('valid type');
 		}).then(undefined, err => {
@@ -68,6 +72,9 @@ function semicolonAtEnd() {
 		});
 	}
 
+	// don't insert newline if coming from ctrl+; command
+	if (noNewlineCmd) return;
+
 	const newline = vscode.workspace.getConfiguration('ez-semicolon').get('newline');
 
 	if (newline && !isReturnStatement()) {
@@ -100,7 +107,7 @@ function isReturnStatement(): boolean {
 	let lowercaseLine = lineObject.text.toLowerCase();
 
 	return lowercaseLine.indexOf('return ') === lineObject.firstNonWhitespaceCharacterIndex
-	|| lowercaseLine.trim() === 'return';
+	|| lowercaseLine.trim() === 'return' || lowercaseLine.trim() === 'return;';
 }
 
 function isInFor(): boolean {
