@@ -70,7 +70,7 @@ function semicolonAtEnd() {
 
 	const newline = vscode.workspace.getConfiguration('ez-semicolon').get('newline');
 
-	if (newline) {
+	if (newline && !isReturnStatement()) {
 		vscode.commands.executeCommand('editor.action.insertLineAfter').then(success => {
 	
 		}).then(undefined, err => {
@@ -85,6 +85,22 @@ function semicolonDefault() {
 	}).then(undefined, err => {
 		console.error(err);
 	});
+}
+
+function isReturnStatement(): boolean {
+	let editor = vscode.window.activeTextEditor;
+
+	if (!editor) {
+		console.error('no editor');
+		return false;
+	}
+	
+	let lineIndex = editor.selection.active.line;
+	let lineObject = editor.document.lineAt(lineIndex);
+	let lowercaseLine = lineObject.text.toLowerCase();
+
+	return lowercaseLine.indexOf('return ') === lineObject.firstNonWhitespaceCharacterIndex
+	|| lowercaseLine.trim() === 'return';
 }
 
 function isInFor(): boolean {
@@ -114,12 +130,15 @@ function isInString(): boolean {
 	let lineObject = editor.document.lineAt(lineIndex);
 	let cursorPos = editor.selection.active.character;
 
+	// amount of single quotes on either side of the cursor
 	let leftCountS = (lineObject.text.slice(0, cursorPos).match(/'/g) || []).length;
 	let rightCountS = (lineObject.text.slice(cursorPos).match(/'/g) || []).length;
 	
+	// amount of double quotes on either side of the cursor
 	let leftCountD = (lineObject.text.slice(0, cursorPos).match(/"/g) || []).length;
 	let rightCountD = (lineObject.text.slice(cursorPos).match(/"/g) || []).length;
 
+	// return true if there are an odd amount of single or double quotes on both sides of the cursor
 	if ((leftCountD % 2 === 1 && rightCountD % 2 === 1) || (leftCountS % 2 === 1 && rightCountS % 2 === 1)) {
 		return true;
 	}
