@@ -13,6 +13,7 @@
 * Other features:
   * If the line already contains a semicolon at the end, a new line will be inserted at the end without adding another semicolon
   * Add a semicolon regularly (without formatting) by pressing `ctrl+alt+;` (`cmd+alt+;` on Mac)
+  * Add a semicolon without a new line at the end of the line by pressing `ctrl+;` (`cmd+;` on Mac)
 
 ## Extension Settings
 
